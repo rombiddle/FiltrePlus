@@ -4,6 +4,12 @@
 #endif
 
 #include "mainwindow.h"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/highgui.hpp"
+
+using namespace std;
+using namespace cv;
 
 MainWindow::MainWindow() : imageLabel(new QLabel), scrollArea(new QScrollArea), scaleFactor(1)
 {
@@ -24,6 +30,15 @@ MainWindow::MainWindow() : imageLabel(new QLabel), scrollArea(new QScrollArea), 
 
 bool MainWindow::loadFile(const QString &fileName)
 {
+    /*const Mat newImage;
+    newImage = imread(fileName, CV_LOAD_IMAGE_COLOR);   // Read the file
+
+    if(! newImage.data )                              // Check for invalid input
+    {
+        cout <<  "Could not open or find the image" << std::endl ;
+        return -1;
+    }*/
+
     QImageReader reader(fileName);
     reader.setAutoTransform(true);
     const QImage newImage = reader.read();
