@@ -30,15 +30,12 @@ int main(int argc, char *argv[])
     }
     mainWindow.show();
     return app.exec();*/
-    QApplication app(argc, argv);
-MainWindow mainWindow;
-mainWindow.show();
-return app.exec();
-    String imageName( "/Users/romainbrunie/Pictures/image001.jpg" ); // by default
+    //QApplication app(argc, argv);
+//MainWindow mainWindow;
+//mainWindow.show();
+//return app.exec();
 
-
-
-
+        String imageName( "/Users/romainbrunie/Pictures/image001.jpg" ); // by default
         //char* imageName = argv[1];
          Mat image;
          image = imread( imageName, 1 );
