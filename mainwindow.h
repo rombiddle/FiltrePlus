@@ -33,6 +33,7 @@ private:
     char* charFileName;
     QImage qimgNew;
     QImage qimgGray;
+    QImage currentImage;
 };
 
 #endif // MAINWINDOW_H
