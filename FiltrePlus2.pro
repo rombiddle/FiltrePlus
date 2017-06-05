@@ -1,16 +1,14 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-05-08T21:21:59
+# Project created by QtCreator 2017-06-05T16:05:46
 #
 #-------------------------------------------------
 
 QT       += core gui
-QT += printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-
-TARGET = FiltrePlus
+TARGET = FiltrePlus2
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -24,8 +22,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += main.cpp \
-    mainwindow.cpp
+
+SOURCES += main.cpp\
+        mainwindow.cpp
 
 HEADERS  += mainwindow.h
 
@@ -34,6 +33,3 @@ FORMS    += mainwindow.ui
 QT_CONFIG -= no-pkg-config
 CONFIG += link_pkgconfig
 PKGCONFIG += opencv
-
-DISTFILES += \
-    ../Pictures/image001.jpg

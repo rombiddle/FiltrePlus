@@ -2,60 +2,37 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QImage>
-#ifndef QT_NO_PRINTER
-#include <QPrinter>
-#endif
+#include "opencv2/imgproc.hpp"
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/core.hpp"
 
-class QAction;
-class QLabel;
-class QMenu;
-class QScrollArea;
-class QScrollBar;
+namespace Ui {
+class MainWindow;
+}
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow();
-    bool loadFile(const QString &);
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
 private slots:
-    void open();
-    void saveAs();
-    void copy();
-    void paste();
-    void zoomIn();
-    void zoomOut();
-    void normalSize();
-    void fitToWindow();
-    void about();
+    void on_addImageButton_clicked();
+
+    void on_saveImageButton_clicked();
+
+    void on_BlurryRadioButton_clicked();
 
 private:
-    void createActions();
-    void createMenus();
-    void updateActions();
-    bool saveFile(const QString &fileName);
-    void setImage(const QImage &newImage);
-    void scaleImage(double factor);
-    void adjustScrollBar(QScrollBar *scrollBar, double factor);
-
-    QImage image;
-    QLabel *imageLabel;
-    QScrollArea *scrollArea;
-    double scaleFactor;
-
-#ifndef QT_NO_PRINTER
-    QPrinter printer;
-#endif
-
-    QAction *saveAsAct;
-    QAction *copyAct;
-    QAction *zoomInAct;
-    QAction *zoomOutAct;
-    QAction *normalSizeAct;
-    QAction *fitToWindowAct;
+    Ui::MainWindow *ui;
+    QString fileName;
+    IplImage *iplImg;
+    char* charFileName;
+    QImage qimgNew;
+    QImage qimgGray;
 };
 
 #endif // MAINWINDOW_H
