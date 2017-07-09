@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>763</width>
+    <height>592</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QPushButton" name="addImageButton">
@@ -39,7 +39,28 @@
         <item>
          <widget class="QRadioButton" name="BlurryRadioButton">
           <property name="text">
-           <string>Blurried</string>
+           <string>noir/gris</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="effet2">
+          <property name="text">
+           <string>effet2</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="effet3">
+          <property name="text">
+           <string>effet3</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="effet4">
+          <property name="text">
+           <string>effet4</string>
           </property>
          </widget>
         </item>
@@ -59,7 +80,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>763</width>
      <height>22</height>
     </rect>
    </property>

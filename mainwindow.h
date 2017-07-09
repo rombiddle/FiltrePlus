@@ -26,6 +26,13 @@ private slots:
 
     void on_BlurryRadioButton_clicked();
 
+
+    void on_effet2_clicked();
+
+    void on_effet3_clicked();
+
+    void on_effet4_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString fileName;
