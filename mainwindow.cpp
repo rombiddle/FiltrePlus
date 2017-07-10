@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "imagemanager.h"
+#include "niveaugris.h"
 #include <QImageWriter>
 #include <QFileDialog>
 #include "opencv2/imgproc.hpp"
@@ -21,32 +23,32 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_addImageButton_clicked()
 {
-    fileName = QFileDialog::getOpenFileName(this,tr("Open Image"),QDir::currentPath(),tr("Image Files [ *.jpg , *.jpeg , *.bmp , *.png , *.gif]"));
+    this->fileName = QFileDialog::getOpenFileName(this,tr("Open Image"),QDir::currentPath(),tr("Image Files [ *.jpg , *.jpeg , *.bmp , *.png , *.gif]"));
+    this->manage = ImageManager::ImageManager(fileName);
+    this->currentImage = manage.LoadImage();
 
+    /**
     charFileName = fileName.toLocal8Bit().data();
-
     iplImg = cvLoadImage(charFileName);
-
     qimgNew = QImage((const unsigned char*)iplImg->imageData,iplImg->width,iplImg->height,QImage::Format_RGB888).rgbSwapped();
     currentImage = qimgNew;
-
-    ui->lblImage->setPixmap(QPixmap::fromImage(qimgNew));
+**/
+    //pas sur que ça fonctionne
+    ui->lblImage->setPixmap(QPixmap::fromImage(this->currentImage));
 }
 
 void MainWindow::on_saveImageButton_clicked()
 {
-    //currentImage.save(fileName);
-    //QImageWriter writer("outimage.png", "png");
-    // writer.setText("Author", "John Smith");
-    // writer.write(currentImage);
-    QImageWriter write(fileName);
-    write.write(currentImage);
+    manage.SaveImage(this->currentImage);
 }
 
 
 
 void MainWindow::on_BlurryRadioButton_clicked()
 {
+    filtreGris = NiveauGris::NiveauGris();
+    this->currentImage = filtreGris.traitementImage(this->currentImage);
+/**
     ui->lblImage->clear();
 
     IplImage *imgGray = cvLoadImage(fileName.toLocal8Bit().data(), CV_LOAD_IMAGE_GRAYSCALE);
@@ -55,8 +57,9 @@ void MainWindow::on_BlurryRadioButton_clicked()
 
     qimgGray.setPixel(0,0,qRgb(0,0,0));
     currentImage = qimgGray;
-
-    ui->lblImage->setPixmap(QPixmap::fromImage(qimgGray));
+**/
+    //pas sur que ça fonctionne
+    ui->lblImage->setPixmap(QPixmap::fromImage(this->currentImage));
 }
 
 
@@ -64,7 +67,8 @@ void MainWindow::on_BlurryRadioButton_clicked()
 
 void MainWindow::on_effet2_clicked()
 {
-
+    this->filtreNegatif = Negatif()
+    this->currentImage = filtreNegatif.traitementImage(this->currentImage);
    /* ui->lblImage->clear();
 
      IplImage* img = cvLoadImage(fileName.toLocal8Bit().data());
@@ -78,7 +82,7 @@ void MainWindow::on_effet2_clicked()
      currentImage = qimgGray;
 
      ui->lblImage->setPixmap(QPixmap::fromImage(qimgGray));*/
-
+/**
     IplImage* img = cvLoadImage(fileName.toLocal8Bit().data());
     cv::namedWindow("Image", CV_WINDOW_AUTOSIZE);
     cvShowImage("Image", img);
@@ -87,7 +91,7 @@ void MainWindow::on_effet2_clicked()
     cvNot(img, img);
     cv::namedWindow("NegativeEffect", CV_WINDOW_AUTOSIZE);
     cvShowImage("NegativeEffect", img);
-
+**/
 }
 
 void MainWindow::on_effet3_clicked()
@@ -98,8 +102,8 @@ void MainWindow::on_effet3_clicked()
     cvShowImage("Image", img);
 
     //Negative Effect
-cvErode(img, img, 0, 2);
-cv::namedWindow("NegativeEffect", CV_WINDOW_AUTOSIZE);
+    cvErode(img, img, 0, 2);
+    cv::namedWindow("NegativeEffect", CV_WINDOW_AUTOSIZE);
     cvShowImage("NegativeEffect", img);
 
 

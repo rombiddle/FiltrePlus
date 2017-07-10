@@ -6,7 +6,10 @@
 
 QT       += core gui
 
+
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 
 TARGET = FiltrePlus2
 TEMPLATE = app
@@ -21,15 +24,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
+INCLUDEPATH     += "D:\Programme\openCV\opencv-3.2.0\include"
+LIBS            +=  -L ""
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    niveaugris.cpp \
+    imagemanager.cpp \
+    negatif.cpp \
+    filtre.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    niveaugris.h \
+    imagemanager.h \
+    negatif.h \
+    filtre.h
 
 FORMS    += mainwindow.ui
 
 QT_CONFIG -= no-pkg-config
 CONFIG += link_pkgconfig
 PKGCONFIG += opencv
+
+DISTFILES += \
+    ReadMe.txt

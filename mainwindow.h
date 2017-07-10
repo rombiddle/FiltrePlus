@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "imagemanager.h"
+#include "niveaugris.h"
+#include "negatif.h"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
@@ -35,12 +38,21 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QString fileName;
+
+    cv::Mat currentImage;
+    std::string fileName;
+
+    ImageManager manage;
+    NiveauGris filtreGris;
+    Negatif filtreNegatif;
+
+
+    /*
     IplImage *iplImg;
     char* charFileName;
     QImage qimgNew;
     QImage qimgGray;
-    QImage currentImage;
+    QImage currentImage;*/
 };
 
 #endif // MAINWINDOW_H
