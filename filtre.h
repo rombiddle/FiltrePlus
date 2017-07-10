@@ -1,6 +1,6 @@
 #ifndef FILTRE_H
 #define FILTRE_H
-
+#include <QString>
 
 class Filtre
 {

@@ -1,20 +1,21 @@
 #ifndef IMAGEMANAGER_H
 #define IMAGEMANAGER_H
-
+#include <QString>
+#include <QImage>
 
 class ImageManager
 {
 private:
-    string fileSource;
+    QString fileSource;
 
 public:
     ImageManager();
-    ImageManager(std::string fileSource);
+    ImageManager(QString fileSource);
     cv::Mat LoadImage();
     void SaveImage(cv::Mat image);
-    void setFileName(std::string fileName) { this->fileSource = fileName; }
-    std::string getFileName() const { return this->fileSource; }
-
+    void setFileName(QString fileName) { this->fileSource = fileName; }
+    QString getFileName() const { return this->fileSource; }
+    QPixmap MatToQPixmap(cv::Mat image);
 
 };
 

@@ -1,5 +1,5 @@
 #include "imagemanager.h"
-#include <QImageWriter>
+#include <QImage>
 #include <QFileDialog>
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
@@ -8,7 +8,7 @@
 
 ImageManager::ImageManager(){}
 
-ImageManager::ImageManager(std::string fileSource)
+ImageManager::ImageManager(QString fileSource)
 {
     this->fileSource = fileSource;
 }
@@ -20,7 +20,7 @@ cv::Mat ImageManager::LoadImage(){
 
     if( imageResult.empty() )                      // Check for invalid input
      {
-            std::cout <<  "Erreu l'image n'existe pas" << std::endl ;
+            std::cout <<  "Erreur l'image n'existe pas" << std::endl ;
             return NULL;
     }
 
@@ -32,3 +32,10 @@ ImageManager::SaveImage(cv::Mat image){
     imwrite(fileSource, image);
 
 }
+
+QPixmap ImageManager::MatToQPixmap(cv::Mat image){
+    QImage img( (uchar*)image.data, image.cols, image.rows, QImage::Format_RGB32);
+    return QPixmap::fromImage(img);
+}
+
+

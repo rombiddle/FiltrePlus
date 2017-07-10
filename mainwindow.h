@@ -40,7 +40,7 @@ private:
     Ui::MainWindow *ui;
 
     cv::Mat currentImage;
-    std::string fileName;
+    QString fileName;
 
     ImageManager manage;
     NiveauGris filtreGris;
