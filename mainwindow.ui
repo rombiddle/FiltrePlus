@@ -58,30 +58,16 @@
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="BlurryRadioButton">
+         <widget class="QCheckBox" name="BlurryCheckBox">
           <property name="text">
-           <string>noir/gris</string>
+           <string>négatif </string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="effet2">
+         <widget class="QCheckBox" name="lumiereCheckBox">
           <property name="text">
-           <string>effet2</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="effet3">
-          <property name="text">
-           <string>effet3</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="effet4">
-          <property name="text">
-           <string>effet4</string>
+           <string>lumiere</string>
           </property>
          </widget>
         </item>

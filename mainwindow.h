@@ -25,20 +25,17 @@ private slots:
 
     void on_saveImageButton_clicked();
 
-    void on_BlurryRadioButton_clicked();
-
-    void on_effet2_clicked();
-
-    void on_effet3_clicked();
-
-    void on_effet4_clicked();
-
 
     void on_flipCheckBox_clicked();
 
     void on_grisCheckBox_clicked();
 
     void on_clearButton_clicked();
+
+    void on_BlurryCheckBox_clicked();
+
+
+    void on_lumiereCheckBox_clicked();
 
 private:
     Ui::MainWindow *ui;

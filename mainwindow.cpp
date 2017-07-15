@@ -44,55 +44,9 @@ QImage MainWindow::Mat2QImage(cv::Mat const& src)
      return dest;
 }
 
-void MainWindow::on_BlurryRadioButton_clicked()
-{
-    ui->lblImage->clear();
 
-    IplImage *imgGray = cvLoadImage(fileName.toLocal8Bit().data(), CV_LOAD_IMAGE_GRAYSCALE);
 
-    qimgGray = QImage((const unsigned char*)imgGray->imageData,imgGray->width,imgGray->height,QImage::Format_Indexed8);
 
-    qimgGray.setPixel(0,0,qRgb(0,0,0));
-    currentImage = qimgGray;
-
-    ui->lblImage->setPixmap(QPixmap::fromImage(qimgGray));
-}
-
-void MainWindow::on_effet2_clicked()
-{
-    cv::Mat image = cv::imread(fileName.toLocal8Bit().data(), CV_LOAD_IMAGE_COLOR);
-    cv::flip(image, image, 1);
-
-    currentImage = qimgGray;
-    matImage = image;
-    QImage test = Mat2QImage(image);
-    ui->lblImage->setPixmap(QPixmap::fromImage(test));
-
-}
-
-void MainWindow::on_effet3_clicked()
-{
-    IplImage* img = cvLoadImage(fileName.toLocal8Bit().data());
-    cv::namedWindow("Image", CV_WINDOW_AUTOSIZE);
-    cvShowImage("Image", img);
-
-    //Negative Effect
-    cvErode(img, img, 0, 2);
-    cv::namedWindow("NegativeEffect", CV_WINDOW_AUTOSIZE);
-    cvShowImage("NegativeEffect", img);
-}
-
-void MainWindow::on_effet4_clicked()
-{
-    IplImage* img = cvLoadImage(fileName.toLocal8Bit().data());
-    cv::namedWindow("Image",CV_WINDOW_AUTOSIZE);
-    cvShowImage("Image", img);
-
-    //Dilate Effect
-    cvDilate(img, img, 0, 2);
-    cv::namedWindow("DilateEffect", CV_WINDOW_AUTOSIZE);
-    cvShowImage("DilateEffect", img);
-}
 
 void MainWindow::on_flipCheckBox_clicked()
 {
@@ -123,12 +77,54 @@ void MainWindow::on_grisCheckBox_clicked()
     ui->grisCheckBox->setCheckable(false);
 }
 
+void MainWindow::on_BlurryCheckBox_clicked()
+{
+    if (ui->BlurryCheckBox->isChecked()){
+        cv::threshold(matImage,matImage,70, 255, CV_THRESH_BINARY_INV);
+
+        QImage test = Mat2QImage(matImage);
+        ui->lblImage->setPixmap(QPixmap::fromImage(test));
+    }
+    ui->BlurryCheckBox->setDown(true);
+    ui->BlurryCheckBox->setCheckable(false);
+}
+
+
+void MainWindow::on_lumiereCheckBox_clicked()
+{
+    if (ui->lumiereCheckBox->isChecked()){
+
+        for( int y = 0; y < matImage.rows; y++ )
+           { for( int x = 0; x < matImage.cols; x++ )
+                { for( int c = 0; c < 3; c++ )
+                     {
+                        matImage.at<cv::Vec3b>(y,x)[c] =
+                        cv::saturate_cast<uchar>( 2.2*( matImage.at<cv::Vec3b>(y,x)[c] ) + 50 );
+                    }
+            }
+           }
+
+        QImage test = Mat2QImage(matImage);
+        ui->lblImage->setPixmap(QPixmap::fromImage(test));
+    }
+    ui->lumiereCheckBox->setDown(true);
+    ui->lumiereCheckBox->setCheckable(false);
+}
+
 void MainWindow::on_clearButton_clicked()
 {
     ui->grisCheckBox->setCheckable(true);
     ui->flipCheckBox->setCheckable(true);
+    ui->lumiereCheckBox->setCheckable(true);
+    ui->BlurryCheckBox->setCheckable(true);
     ui->grisCheckBox->setDown(false);
+    ui->lumiereCheckBox->setDown(false);
+
     ui->flipCheckBox->setDown(false);
+    ui->BlurryCheckBox->setDown(false);
+    ui->lumiereCheckBox->setCheckState(Qt::Unchecked);
+
+    ui->BlurryCheckBox->setCheckState(Qt::Unchecked);
     ui->grisCheckBox->setCheckState(Qt::Unchecked);
     ui->flipCheckBox->setCheckState(Qt::Unchecked);
     matImage.release();
@@ -136,3 +132,8 @@ void MainWindow::on_clearButton_clicked()
     QImage test = Mat2QImage(matImage);
     ui->lblImage->setPixmap(QPixmap::fromImage(test));
 }
+
+
+
+
+
