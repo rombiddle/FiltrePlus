@@ -1,41 +1,19 @@
 #include "imagemanager.h"
-#include <QImage>
-#include <QFileDialog>
-#include "opencv2/imgproc.hpp"
-#include "opencv2/imgcodecs.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/core.hpp"
 
 ImageManager::ImageManager(){}
 
-ImageManager::ImageManager(QString fileSource)
-{
-    this->fileSource = fileSource;
+void ImageManager::SaveImage(){
+    cv::imwrite( fileSource.toLocal8Bit().data() , matImage );
 }
 
-cv::Mat ImageManager::LoadImage(){
-    cv::Mat imageResult;
+QImage ImageManager::Mat2QImage(cv::Mat const& src){
+    // conversion
+    cv::Mat temp(src.cols,src.rows,src.type());
+    cvtColor(src, temp,CV_BGR2RGB);
+    QImage dest= QImage((uchar*) temp.data, temp.cols, temp.rows, temp.step, QImage::Format_RGB888);
 
-    imageResult =  imread(this->fileSource, CV_LOAD_IMAGE_COLOR);
+    // everytime i make a mat -> qimage conversion, it is because I added a filter, so I save the new mat image in matImage
+    matImage = src;
 
-    if( imageResult.empty() )                      // Check for invalid input
-     {
-            std::cout <<  "Erreur l'image n'existe pas" << std::endl ;
-            return NULL;
-    }
-
-    return imageResult;
-
+    return dest;
 }
-
-ImageManager::SaveImage(cv::Mat image){
-    imwrite(fileSource, image);
-
-}
-
-QPixmap ImageManager::MatToQPixmap(cv::Mat image){
-    QImage img( (uchar*)image.data, image.cols, image.rows, QImage::Format_RGB32);
-    return QPixmap::fromImage(img);
-}
-
-

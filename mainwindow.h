@@ -6,6 +6,7 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/core.hpp"
+#include "imagemanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,7 +18,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    QImage Mat2QImage(cv::Mat const& src);
+    //QImage Mat2QImage(cv::Mat const& src);
     ~MainWindow();
 
 private slots:
@@ -45,7 +46,8 @@ private:
     QImage qimgNew;
     QImage qimgGray;
     QImage currentImage;
-    cv::Mat matImage;
+
+    ImageManager manage;
 };
 
 #endif // MAINWINDOW_H
