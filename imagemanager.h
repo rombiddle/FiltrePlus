@@ -10,21 +10,20 @@
 
 class ImageManager
 {
-private:
-    QString fileSource;
-    cv::Mat matImage;
+    private:
+        QString fileSource;
+        cv::Mat matImage;
 
-public:
-    ImageManager();
-    QImage Mat2QImage(cv::Mat const& src);
-    void SaveImage();
+    public:
+        ImageManager();
+        QImage Mat2QImage(cv::Mat const& src);
+        void SaveImage();
 
-    void setFileSource(QString fileSource) { this->fileSource = fileSource; }
-    QString getFileSource() const { return this->fileSource; }
+        void setFileSource(QString fileSource) { this->fileSource = fileSource; }
+        QString getFileSource() const { return this->fileSource; }
 
-    void setMatImage(cv::Mat matImage) { this->matImage = matImage; }
-    cv::Mat getMatImage() const { return this->matImage; }
-
+        void setMatImage(cv::Mat matImage) { this->matImage = matImage; }
+        cv::Mat getMatImage() const { return this->matImage; }
 };
 
 #endif // IMAGEMANAGER_H

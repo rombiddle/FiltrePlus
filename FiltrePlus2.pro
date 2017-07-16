@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    imagemanager.cpp
+    imagemanager.cpp \
+    filtremanager.cpp
 
 HEADERS  += mainwindow.h \
-    imagemanager.h
+    imagemanager.h \
+    filtremanager.h
 
 FORMS    += mainwindow.ui
 

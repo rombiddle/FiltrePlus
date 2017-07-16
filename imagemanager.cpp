@@ -13,7 +13,7 @@ QImage ImageManager::Mat2QImage(cv::Mat const& src){
     QImage dest= QImage((uchar*) temp.data, temp.cols, temp.rows, temp.step, QImage::Format_RGB888);
 
     // everytime i make a mat -> qimage conversion, it is because I added a filter, so I save the new mat image in matImage
-    matImage = src;
+    //matImage = src;
 
     return dest;
 }
