@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->manage = ImageManager::ImageManager();
     this->filter = FiltreManager::FiltreManager();
     initUI();
+    desactivateButton();
 }
 
 MainWindow::~MainWindow()
@@ -37,6 +38,33 @@ void MainWindow::initUI(){
     ui->comboBox->addItem("COLORMAP_HOT");
 }
 
+void MainWindow::activateButton(){
+    ui->validerPushButton->setDisabled(false);
+    ui->lumierePushButton->setDisabled(false);
+    ui->negatifPushButton->setDisabled(false);
+    ui->grisPushButton->setDisabled(false);
+    ui->comboBox->setDisabled(false);
+    ui->flouHorizontalSlider->setDisabled(false);
+    ui->flouHorizontalSlider->setValue(1);
+    ui->flipPushButton->setDisabled(false);
+    ui->transposePushButton->setDisabled(false);
+    ui->saveImageButton->setDisabled(false);
+    ui->clearButton->setDisabled(false);
+}
+
+void MainWindow::desactivateButton(){
+    ui->validerPushButton->setDisabled(true);
+    ui->lumierePushButton->setDisabled(true);
+    ui->negatifPushButton->setDisabled(true);
+    ui->grisPushButton->setDisabled(true);
+    ui->comboBox->setDisabled(true);
+    ui->flouHorizontalSlider->setDisabled(true);
+    ui->flipPushButton->setDisabled(true);
+    ui->transposePushButton->setDisabled(true);
+    ui->saveImageButton->setDisabled(true);
+    ui->clearButton->setDisabled(true);
+}
+
 //----------------------------//
 //----image manager button----//
 //----------------------------//
@@ -56,11 +84,10 @@ void MainWindow::on_addImageButton_clicked()
         ui->lblImage->setText("Erreur lors du chargement de l'image");
     }else{
         manage.setMatImage(matImage);
+        activateButton();
+        QImage test = manage.Mat2QImage(manage.getMatImage());
+        ui->lblImage->setPixmap(QPixmap::fromImage(test));
     }
-
-    QImage test = manage.Mat2QImage(manage.getMatImage());
-
-    ui->lblImage->setPixmap(QPixmap::fromImage(test));
 }
 
 void MainWindow::on_saveImageButton_clicked()
@@ -70,20 +97,7 @@ void MainWindow::on_saveImageButton_clicked()
 
 void MainWindow::on_clearButton_clicked()
 {
-    ui->grisCheckBox->setCheckable(true);
-    ui->flipCheckBox->setCheckable(true);
-    ui->lumiereCheckBox->setCheckable(true);
-    ui->NegatifCheckBox->setCheckable(true);
-
-    ui->grisCheckBox->setDown(false);
-    ui->lumiereCheckBox->setDown(false);
-    ui->flipCheckBox->setDown(false);
-    ui->NegatifCheckBox->setDown(false);
-
-    ui->lumiereCheckBox->setCheckState(Qt::Unchecked);
-    ui->NegatifCheckBox->setCheckState(Qt::Unchecked);
-    ui->grisCheckBox->setCheckState(Qt::Unchecked);
-    ui->flipCheckBox->setCheckState(Qt::Unchecked);
+    activateButton();
 
     cv::Mat matImage = cv::imread(manage.getFileSource().toLocal8Bit().data(), CV_LOAD_IMAGE_COLOR);
 
@@ -103,47 +117,6 @@ void MainWindow::on_clearButton_clicked()
 //----filter manager button---//
 //----------------------------//
 
-void MainWindow::on_flipCheckBox_clicked()
-{
-    if (ui->flipCheckBox->isChecked()){
-        manage.setMatImage(filter.flipFiltre(manage.getMatImage()));
-        ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(manage.getMatImage())));
-    }
-    ui->flipCheckBox->setDown(true);
-    ui->flipCheckBox->setCheckable(false);
-}
-
-void MainWindow::on_grisCheckBox_clicked()
-{
-    if (ui->grisCheckBox->isChecked()){
-        manage.setMatImage(filter.grisFiltre(manage.getMatImage()));
-        ui->lblImage->setPixmap(QPixmap::fromImage(QImage((uchar*) manage.getMatImage().data, manage.getMatImage().cols, manage.getMatImage().rows, manage.getMatImage().step, QImage::Format_RGB888)));
-    }
-    ui->grisCheckBox->setDown(true);
-    ui->grisCheckBox->setCheckable(false);
-}
-
-void MainWindow::on_NegatifCheckBox_clicked()
-{
-    if (ui->NegatifCheckBox->isChecked()){
-        manage.setMatImage(filter.negatifFiltre(manage.getMatImage()));
-        ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(manage.getMatImage())));
-    }
-    ui->NegatifCheckBox->setDown(true);
-    ui->NegatifCheckBox->setCheckable(false);
-}
-
-
-void MainWindow::on_lumiereCheckBox_clicked()
-{
-    if (ui->lumiereCheckBox->isChecked()){
-        manage.setMatImage(filter.lumiereFiltre(manage.getMatImage()));
-        ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(manage.getMatImage())));
-    }
-    ui->lumiereCheckBox->setDown(true);
-    ui->lumiereCheckBox->setCheckable(false);
-}
-
 void MainWindow::on_flouHorizontalSlider_valueChanged(int value)
 {
     ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(filter.flouFiltre(manage.getMatImage(), value))));
@@ -154,6 +127,7 @@ void MainWindow::on_flouHorizontalSlider_sliderReleased()
 {
     manage.setMatImage(filter.flouFiltre(manage.getMatImage(), valFlouImage));
     ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(manage.getMatImage())));
+    ui->flouHorizontalSlider->setDisabled(true);
 }
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
@@ -162,15 +136,43 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(filter.colorMapFiltre(manage.getMatImage(), index))));
 }
 
-void MainWindow::on_valiserColorMapcheckBox_clicked()
-{
-    manage.setMatImage(filter.colorMapFiltre(manage.getMatImage(), valColorMap));
-    ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(manage.getMatImage())));
-}
-
 void MainWindow::on_transposePushButton_clicked()
 {
     manage.setMatImage(filter.transposeFiltre(manage.getMatImage()));
     ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(manage.getMatImage())));
-    ui->transposePushButton->setDisabled(true);
+}
+
+void MainWindow::on_flipPushButton_clicked()
+{
+    manage.setMatImage(filter.flipFiltre(manage.getMatImage()));
+    ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(manage.getMatImage())));
+}
+
+void MainWindow::on_grisPushButton_clicked()
+{
+    manage.setMatImage(filter.grisFiltre(manage.getMatImage()));
+    ui->lblImage->setPixmap(QPixmap::fromImage(QImage((uchar*) manage.getMatImage().data, manage.getMatImage().cols, manage.getMatImage().rows, manage.getMatImage().step, QImage::Format_RGB888)));
+    ui->grisPushButton->setDisabled(true);
+}
+
+void MainWindow::on_negatifPushButton_clicked()
+{
+    manage.setMatImage(filter.negatifFiltre(manage.getMatImage()));
+    ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(manage.getMatImage())));
+    ui->negatifPushButton->setDisabled(true);
+}
+
+void MainWindow::on_lumierePushButton_clicked()
+{
+    manage.setMatImage(filter.lumiereFiltre(manage.getMatImage()));
+    ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(manage.getMatImage())));
+    ui->lumierePushButton->setDisabled(true);
+}
+
+void MainWindow::on_validerPushButton_clicked()
+{
+    manage.setMatImage(filter.colorMapFiltre(manage.getMatImage(), valColorMap));
+    ui->lblImage->setPixmap(QPixmap::fromImage(manage.Mat2QImage(manage.getMatImage())));
+    ui->validerPushButton->setDisabled(true);
+    ui->comboBox->setDisabled(true);
 }

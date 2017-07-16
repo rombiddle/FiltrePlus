@@ -55,30 +55,23 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="flipCheckBox">
+         <widget class="QPushButton" name="grisPushButton">
           <property name="text">
-           <string>Flip</string>
+           <string>Gris</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="grisCheckBox">
+         <widget class="QPushButton" name="negatifPushButton">
           <property name="text">
-           <string>gris</string>
+           <string>Négatif</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="NegatifCheckBox">
+         <widget class="QPushButton" name="lumierePushButton">
           <property name="text">
-           <string>négatif </string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="lumiereCheckBox">
-          <property name="text">
-           <string>lumiere</string>
+           <string>Lumière</string>
           </property>
          </widget>
         </item>
@@ -88,7 +81,7 @@
            <widget class="QComboBox" name="comboBox"/>
           </item>
           <item>
-           <widget class="QCheckBox" name="valiserColorMapcheckBox">
+           <widget class="QPushButton" name="validerPushButton">
             <property name="text">
              <string>Valider</string>
             </property>
@@ -116,11 +109,14 @@
           </item>
           <item>
            <widget class="QSlider" name="flouHorizontalSlider">
+            <property name="minimum">
+             <number>1</number>
+            </property>
             <property name="maximum">
              <number>50</number>
             </property>
             <property name="value">
-             <number>0</number>
+             <number>1</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>

@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
 #include "imagemanager.h"
 #include "filtremanager.h"
 
@@ -21,28 +20,23 @@ class MainWindow : public QMainWindow
     private slots:
         void on_addImageButton_clicked();
         void on_saveImageButton_clicked();
-        void on_flipCheckBox_clicked();
-        void on_grisCheckBox_clicked();
         void on_clearButton_clicked();
-        void on_NegatifCheckBox_clicked();
-        void on_lumiereCheckBox_clicked();
         void on_flouHorizontalSlider_valueChanged(int value);
         void on_flouHorizontalSlider_sliderReleased();
         void on_comboBox_currentIndexChanged(int index);
-        void on_valiserColorMapcheckBox_clicked();
         void initUI();
-
         void on_transposePushButton_clicked();
+        void on_flipPushButton_clicked();
+        void on_grisPushButton_clicked();
+        void on_negatifPushButton_clicked();
+        void on_lumierePushButton_clicked();
+        void on_validerPushButton_clicked();
+        void activateButton();
+        void desactivateButton();
 
 private:
         Ui::MainWindow *ui;
         QString fileName;
-        IplImage *iplImg;
-        char* charFileName;
-        QImage qimgNew;
-        QImage qimgGray;
-        QImage currentImage;
-
         ImageManager manage;
         FiltreManager filter;
         int valFlouImage;
